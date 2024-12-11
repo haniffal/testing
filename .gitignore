@@ -1,0 +1,4 @@
+serviceaccountkey.json
+node_modules/
+/src/db.js
+venv/
