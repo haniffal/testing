@@ -5,11 +5,11 @@ const path = require('path');
 
 const pathKey = path.resolve('./serviceaccountkey.json');
 const gcs = new Storage({
-    projectId: 'bangkit-plantlens',
+    projectId: 'testing-plantlens',
     keyFilename: pathKey
 });
 
-const bucketName = 'history-image';
+const bucketName = 'history-image1';
 const bucket = gcs.bucket(bucketName);
 
 function getPublicUrl(filename) {
