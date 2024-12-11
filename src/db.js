@@ -2,10 +2,19 @@ const mysql = require('mysql2');
 
 // Membuat koneksi ke MySQL
 const connection = mysql.createConnection({
-    host: process.env.DB_HOST,        // Ganti dengan IP instance MySQL Anda
-    user: process.env.DB_USER,                  // Ganti dengan username MySQL Anda
-    database: process.env.DB_NAME,       // Ganti dengan nama database Anda
-    password: process.env.DB_PASS        // Ganti dengan password MySQL Anda
+    host: '34.101.196.207',        // Ganti dengan IP instance MySQL Anda
+    user: 'root',                  // Ganti dengan username MySQL Anda
+    database: 'plantlens1',       // Ganti dengan nama database Anda
+    password: '1234'        // Ganti dengan password MySQL Anda
+    
+});
+
+// Membuat koneksi ke MySQL untuk pool
+const pool = mysql.createPool({
+    host: '34.101.196.207',        // Ganti dengan IP instance MySQL Anda
+    user: 'root',                  // Ganti dengan username MySQL Anda
+    database: 'plantlens1',       // Ganti dengan nama database Anda
+    password: '1234'        // Ganti dengan password MySQL Anda
     
 });
 
@@ -19,4 +28,4 @@ connection.connect((err) => {
     
 });
 
-module.exports = connection ;
+module.exports = connection, pool;
