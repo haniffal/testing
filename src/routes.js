@@ -1,4 +1,4 @@
-const { getPlantData, getDiseaseSolutions } = require('./handler');
+const { getPlantData, getDiseaseSolutions, getHistoryHandler, uploadImageAndPredictHandler } = require('./handler');
 
 const routes = [
     {
