@@ -7,7 +7,7 @@ const { uploadImageHandler } = require('./ImageUpload');
 
 const getPlantData = async (request, h) => {
     try {
-        const [result] = await pool.query('SELECT * FROM plants');
+        const [result] = await pool.query('SELECT * FROM tanaman');
         return h.response(result).code(200);
     } catch (err) {
         console.error(err);
@@ -18,10 +18,10 @@ const getPlantData = async (request, h) => {
 const getDiseaseSolutions = async (request, h) => {
     try {
         const [result] = await pool.query(`
-            SELECT plants.name AS plant_name, diseases.name AS disease_name, solutions.description AS solution
-            FROM plants
-            JOIN diseases ON plants.id = diseases.plant_id
-            JOIN solutions ON diseases.id = solutions.disease_id
+            SELECT tanaman.nama_tanaman AS plant_name, penyakit.nama_penyakit AS disease_name, solusi.desc_solusi AS solution
+            FROM tanaman
+            JOIN penyakit ON tanaman.id_tanaman = penyakit.id_tanaman
+            JOIN solusi ON penyakit.id_penyakit = solusi.id_penyakit
         `);
         return h.response(result).code(200);
     } catch (err) {
