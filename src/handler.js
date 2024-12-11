@@ -4,30 +4,41 @@ const fs = require('fs');
 const path = require('path');
 const { exec } = require('child_process');
 const { uploadImageHandler } = require('./ImageUpload');
+const pool = require('./db')
 
-const getPlantData = async (request, h) => {
-    try {
-        const [result] = await pool.query('SELECT * FROM tanaman');
-        return h.response(result).code(200);
-    } catch (err) {
-        console.error(err);
-        return h.response({ message: 'Failed to fetch plant data.' }).code(500);
-    }
+const getPlantData = (request, h) => {
+    return new Promise((resolve, reject) => {
+        const query = 'SELECT * FROM tanaman';
+
+        pool.query(query, (error, results) => {
+            if (error) {
+                console.error(error);
+                reject(h.response({ message: 'Failed to fetch plant data.' }).code(500));
+            } else {
+                resolve(h.response(results).code(200));
+            }
+        });
+    });
 };
 
-const getDiseaseSolutions = async (request, h) => {
-    try {
-        const [result] = await pool.query(`
+const getDiseaseSolutions = (request, h) => {
+    return new Promise((resolve, reject) => {
+        const query = `
             SELECT tanaman.nama_tanaman AS plant_name, penyakit.nama_penyakit AS disease_name, solusi.desc_solusi AS solution
             FROM tanaman
             JOIN penyakit ON tanaman.id_tanaman = penyakit.id_tanaman
             JOIN solusi ON penyakit.id_penyakit = solusi.id_penyakit
-        `);
-        return h.response(result).code(200);
-    } catch (err) {
-        console.error(err);
-        return h.response({ message: 'Failed to fetch disease solutions.' }).code(500);
-    }
+        `;
+
+        pool.query(query, (error, results) => {
+            if (error) {
+                console.error(error);
+                reject(h.response({ message: 'Failed to fetch disease solutions.' }).code(500));
+            } else {
+                resolve(h.response(results).code(200));
+            }
+        });
+    });
 };
 
 const predictImageWithPython = (imagePath) => {
